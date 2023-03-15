@@ -1,3 +1,4 @@
+using Serilog;
 using Todo_Assignment.API.Data.DbContexts;
 
 namespace Todo_Assignment.API
@@ -14,9 +15,20 @@ namespace Todo_Assignment.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // Inject Db Context
             builder.Services.AddDbContext<TaskContext>();
 
+            // Inject Auto Mapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // Inject Serilog
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Console()
+                .WriteTo.File("logs/task.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
 
             var app = builder.Build();
 

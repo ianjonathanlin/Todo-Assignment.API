@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using Todo_Assignment.API.Data.DbContexts;
 using Todo_Assignment.API.Data.Entities;
 using Todo_Assignment.API.Models;
@@ -14,11 +13,13 @@ namespace Todo_Assignment.API.Controllers
     {
         private readonly TaskContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public TaskController(TaskContext context, IMapper mapper)
+        public TaskController(TaskContext context, IMapper mapper, ILogger<TaskController> logger)
         {
-            _context = context;
-            _mapper = mapper;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
@@ -26,12 +27,15 @@ namespace Todo_Assignment.API.Controllers
         {
             try
             {
+                throw new Exception("testing");
+
                 var tasks = await _context.Tasks.ToListAsync();
                 return Ok(_mapper.Map<IEnumerable<TaskModel>>(tasks));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server Failure");
+                _logger.LogCritical("Exception occured in GetAllTasks.", ex);
+                return StatusCode(500, "Server Failure.");
             }
 
         }
@@ -44,14 +48,16 @@ namespace Todo_Assignment.API.Controllers
                 var task = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
                 if (task == null)
                 {
+                    _logger.LogInformation($"Task with ID {taskId} was not found. Action: GetTaskById");
                     return NotFound();
                 }
 
                 return Ok(_mapper.Map<TaskModel>(task));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                _logger.LogCritical("Exception occured in GetTaskById.", ex);
+                return StatusCode(500, "Server Failure.");
             }
         }
 
@@ -77,7 +83,8 @@ namespace Todo_Assignment.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                _logger.LogCritical("Exception occured in CreateTask.", ex);
+                return StatusCode(500, "Server Failure.");
             }
         }
 
@@ -91,6 +98,7 @@ namespace Todo_Assignment.API.Controllers
 
                 if (existingTask == null)
                 {
+                    _logger.LogInformation($"Task with ID {taskId} was not found. Action: UpdateTask");
                     return NotFound();
                 }
 
@@ -116,9 +124,10 @@ namespace Todo_Assignment.API.Controllers
 
                 return Ok(_mapper.Map<TaskModel>(existingTask));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server Failure");
+                _logger.LogCritical("Exception occured in UpdateTask.", ex);
+                return StatusCode(500, "Server Failure.");
             }
         }
 
@@ -130,6 +139,7 @@ namespace Todo_Assignment.API.Controllers
                 var taskToBeDeleted = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
                 if (taskToBeDeleted == null)
                 {
+                    _logger.LogInformation($"Task with ID {taskId} was not found. Action: DeleteTask");
                     return NotFound();
                 }
 
@@ -139,9 +149,10 @@ namespace Todo_Assignment.API.Controllers
 
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server Failure");
+                _logger.LogCritical("Exception occured in DeleteTask.", ex);
+                return StatusCode(500, "Server Failure.");
             }
         }
     }
