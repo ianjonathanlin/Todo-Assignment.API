@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Todo_Assignment.API.Data.DbContexts;
 using Todo_Assignment.API.Data.Entities;
 using Todo_Assignment.API.Models;
@@ -23,74 +24,125 @@ namespace Todo_Assignment.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskEntity>>> GetAllTasks()
         {
-            var tasks = await _context.Tasks.ToListAsync();
-            return Ok(_mapper.Map<IEnumerable<TaskModel>>(tasks));
+            try
+            {
+                var tasks = await _context.Tasks.ToListAsync();
+                return Ok(_mapper.Map<IEnumerable<TaskModel>>(tasks));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Failure");
+            }
+
         }
 
-        [HttpGet("{taskid}")]
-        public async Task<ActionResult<IEnumerable<TaskEntity>>> GetTaskById(int taskId)
+        [HttpGet("{taskId}")]
+        public async Task<ActionResult<TaskEntity>> GetTaskById(int taskId)
         {
-            var task = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
+            try
+            {
+                var task = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
+                if (task == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(_mapper.Map<TaskModel>(task));
+                return Ok(_mapper.Map<TaskModel>(task));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult<TaskEntity>> CreateTask(TaskModel task)
         {
-            var newTask = _mapper.Map<TaskEntity>(task);
+            try
+            {
+                var newTask = new TaskEntity
+                {
+                    Title = task.Title,
+                    Description = task.Description,
+                    DueDate = task.DueDate,
+                    Category = task.Category,
+                    CreatedDateTime = DateTime.UtcNow,
+                    LatestUpdatedDateTime = DateTime.UtcNow
+                };
 
-            // validation for model
+                _context.Tasks.Add(newTask);
+                await _context.SaveChangesAsync();
 
-            // fill in blanks e.g. createdDate, lastUpdated etc.
-
-            _context.Tasks.Add(newTask);
-            await _context.SaveChangesAsync();
-
-            return Ok(_mapper.Map<TaskModel>(newTask));
+                return Ok(_mapper.Map<TaskModel>(newTask));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
         }
 
-        [HttpPut("{taskid}")]
+        [HttpPut("{taskId}")]
         public async Task<ActionResult<TaskEntity>> UpdateTask(int taskId, TaskModel task)
         {
-            var existingTask = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
-
-            // validation for model
-
-            // fill in blanks e.g. createdDate, lastUpdated etc.
-
-            if (existingTask != null)
+            try
             {
-                var updatedTask = _mapper.Map<TaskEntity>(task);
+                var existingTask = _mapper.Map<TaskEntity>(
+                    await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync());
 
+                if (existingTask == null)
+                {
+                    return NotFound();
+                }
+
+                var updatedTask = new TaskEntity
+                {
+                    Id = existingTask.Id,
+                    Title = task.Title,
+                    Description = task.Description,
+                    DueDate = task.DueDate,
+                    Category = task.Category,
+                    CreatedDateTime = existingTask.CreatedDateTime,
+                    LatestUpdatedDateTime = DateTime.UtcNow
+                };
+
+                // Update with new values & fields
                 existingTask.Title = updatedTask.Title;
                 existingTask.Description = updatedTask.Description;
                 existingTask.DueDate = updatedTask.DueDate;
                 existingTask.Category = updatedTask.Category;
-                existingTask.LatestUpdatedDateTime = DateTime.UtcNow;
+                existingTask.LatestUpdatedDateTime = updatedTask.LatestUpdatedDateTime;
 
                 await _context.SaveChangesAsync();
 
                 return Ok(_mapper.Map<TaskModel>(existingTask));
             }
-
-            return BadRequest();
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Failure");
+            }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{taskId}")]
         public async Task<ActionResult<TaskEntity>> DeleteTask(int taskId)
         {
-            var taskToBeDeleted = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
-
-            if (taskToBeDeleted != null)
+            try
             {
+                var taskToBeDeleted = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
+                if (taskToBeDeleted == null)
+                {
+                    return NotFound();
+                }
+
                 // Soft Delete
                 taskToBeDeleted.IsDeleted = true;
                 await _context.SaveChangesAsync();
 
                 return Ok();
             }
-            return BadRequest();
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Failure");
+            }
         }
     }
 }
