@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Todo_Assignment.API.Data.DbContexts;
 using Todo_Assignment.API.Data.Entities;
 using Todo_Assignment.API.Models;
+using Todo_Assignment.API.Services;
 
 namespace Todo_Assignment.API.Controllers
 {
@@ -11,148 +10,87 @@ namespace Todo_Assignment.API.Controllers
     [ApiController]
     public class TaskController : ControllerBase
     {
-        private readonly TaskContext _context;
-        private readonly IMapper _mapper;
+        private readonly ITaskRepository _taskRepository;
         private readonly ILogger _logger;
 
-        public TaskController(TaskContext context, IMapper mapper, ILogger<TaskController> logger)
+        public TaskController(ITaskRepository taskRepository, ILogger<TaskController> logger)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _taskRepository = taskRepository;
+            _logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskEntity>>> GetAllTasks()
+        public async Task<ActionResult<IEnumerable<TaskModel>>> GetAllTasks()
         {
             try
             {
-                throw new Exception("testing");
-
-                var tasks = await _context.Tasks.ToListAsync();
-                return Ok(_mapper.Map<IEnumerable<TaskModel>>(tasks));
+                return Ok(await _taskRepository.GetTasksAsync());
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Exception occured in GetAllTasks.", ex);
-                return StatusCode(500, "Server Failure.");
-            }
-
-        }
-
-        [HttpGet("{taskId}")]
-        public async Task<ActionResult<TaskEntity>> GetTaskById(int taskId)
-        {
-            try
-            {
-                var task = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
-                if (task == null)
-                {
-                    _logger.LogInformation($"Task with ID {taskId} was not found. Action: GetTaskById");
-                    return NotFound();
-                }
-
-                return Ok(_mapper.Map<TaskModel>(task));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogCritical("Exception occured in GetTaskById.", ex);
-                return StatusCode(500, "Server Failure.");
+                _logger.LogInformation($"Action: GetAllTasks", ex);
+                return BadRequest();
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult<TaskEntity>> CreateTask(TaskModel task)
+        public async Task<ActionResult<IEnumerable<TaskModel>>> AddTask(TaskModel task)
         {
             try
             {
-                var newTask = new TaskEntity
-                {
-                    Title = task.Title,
-                    Description = task.Description,
-                    DueDate = task.DueDate,
-                    Category = task.Category,
-                    CreatedDateTime = DateTime.UtcNow,
-                    LatestUpdatedDateTime = DateTime.UtcNow
-                };
+                _taskRepository.AddTask(task);
+                await _taskRepository.SaveChangesAsync();
 
-                _context.Tasks.Add(newTask);
-                await _context.SaveChangesAsync();
-
-                return Ok(_mapper.Map<TaskModel>(newTask));
+                return Ok(await _taskRepository.GetTasksAsync());
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Exception occured in CreateTask.", ex);
-                return StatusCode(500, "Server Failure.");
+                _logger.LogInformation($"Action: AddTask", ex);
+                return BadRequest();
             }
         }
 
         [HttpPut("{taskId}")]
-        public async Task<ActionResult<TaskEntity>> UpdateTask(int taskId, TaskModel task)
+        public async Task<ActionResult<IEnumerable<TaskModel>>> UpdateTask(int taskId, TaskModel task)
         {
             try
             {
-                var existingTask = _mapper.Map<TaskEntity>(
-                    await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync());
+                _taskRepository.UpdateTask(taskId, task);
+                await _taskRepository.SaveChangesAsync();
 
-                if (existingTask == null)
-                {
-                    _logger.LogInformation($"Task with ID {taskId} was not found. Action: UpdateTask");
-                    return NotFound();
-                }
-
-                var updatedTask = new TaskEntity
-                {
-                    Id = existingTask.Id,
-                    Title = task.Title,
-                    Description = task.Description,
-                    DueDate = task.DueDate,
-                    Category = task.Category,
-                    CreatedDateTime = existingTask.CreatedDateTime,
-                    LatestUpdatedDateTime = DateTime.UtcNow
-                };
-
-                // Update with new values & fields
-                existingTask.Title = updatedTask.Title;
-                existingTask.Description = updatedTask.Description;
-                existingTask.DueDate = updatedTask.DueDate;
-                existingTask.Category = updatedTask.Category;
-                existingTask.LatestUpdatedDateTime = updatedTask.LatestUpdatedDateTime;
-
-                await _context.SaveChangesAsync();
-
-                return Ok(_mapper.Map<TaskModel>(existingTask));
+                return Ok(await _taskRepository.GetTasksAsync());
+            }
+            catch (TaskNotFoundException ex)
+            {
+                _logger.LogInformation($"Task with ID {taskId} was not found. Action: UpdateTask", ex);
+                return NotFound();
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Exception occured in UpdateTask.", ex);
-                return StatusCode(500, "Server Failure.");
+                _logger.LogInformation($"Action: UpdateTask", ex);
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpDelete("{taskId}")]
-        public async Task<ActionResult<TaskEntity>> DeleteTask(int taskId)
+        public async Task<ActionResult<IEnumerable<TaskModel>>> DeleteTask(int taskId)
         {
             try
             {
-                var taskToBeDeleted = await _context.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
-                if (taskToBeDeleted == null)
-                {
-                    _logger.LogInformation($"Task with ID {taskId} was not found. Action: DeleteTask");
-                    return NotFound();
-                }
+                _taskRepository.DeleteTask(taskId);
+                await _taskRepository.SaveChangesAsync();
 
-                // Soft Delete
-                taskToBeDeleted.IsDeleted = true;
-                await _context.SaveChangesAsync();
-
-                return Ok();
+                return Ok(await _taskRepository.GetTasksAsync());
+            }
+            catch (TaskNotFoundException ex)
+            {
+                _logger.LogInformation($"Task with ID {taskId} was not found. Action: DeleteTask", ex);
+                return NotFound();
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Exception occured in DeleteTask.", ex);
-                return StatusCode(500, "Server Failure.");
+                _logger.LogInformation($"Action: DeleteTask", ex);
+                return BadRequest();
             }
         }
     }

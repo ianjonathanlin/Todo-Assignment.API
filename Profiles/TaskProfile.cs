@@ -7,6 +7,8 @@ namespace Todo_Assignment.API.Profiles
         public TaskProfile()
         {
             CreateMap<Data.Entities.TaskEntity, Models.TaskModel>();
+
+            CreateMap<Models.TaskModel, Data.Entities.TaskEntity>();
         }
     }
 }

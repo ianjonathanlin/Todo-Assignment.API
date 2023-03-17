@@ -35,7 +35,7 @@ namespace Todo_Assignment.API.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)");
 
-                    b.Property<DateTime>("CreatedDateTime")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
@@ -49,13 +49,13 @@ namespace Todo_Assignment.API.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LatestUpdatedDateTime")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -66,34 +66,34 @@ namespace Todo_Assignment.API.Migrations
                         {
                             Id = 1,
                             Category = "Urgent",
-                            CreatedDateTime = new DateTime(2023, 3, 12, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9184),
+                            Created = new DateTime(2023, 3, 14, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3718),
                             Description = "Completing the first task is a big leap of success.",
-                            DueDate = new DateTime(2023, 6, 23, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9176),
+                            DueDate = new DateTime(2023, 6, 25, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3711),
                             IsDeleted = false,
-                            LatestUpdatedDateTime = new DateTime(2023, 3, 15, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9186),
-                            Title = "First Task"
+                            Title = "First Task",
+                            Updated = new DateTime(2023, 3, 17, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3719)
                         },
                         new
                         {
                             Id = 2,
                             Category = "Assignment",
-                            CreatedDateTime = new DateTime(2023, 3, 15, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9238),
+                            Created = new DateTime(2023, 3, 17, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3814),
                             Description = "Create a new To-Do using Angular and ASP.NET for API.",
-                            DueDate = new DateTime(2023, 3, 23, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9237),
+                            DueDate = new DateTime(2023, 3, 25, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3813),
                             IsDeleted = false,
-                            LatestUpdatedDateTime = new DateTime(2023, 3, 15, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9238),
-                            Title = "To-Do List Project"
+                            Title = "To-Do List Project",
+                            Updated = new DateTime(2023, 3, 17, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3814)
                         },
                         new
                         {
                             Id = 3,
                             Category = "OnBoarding",
-                            CreatedDateTime = new DateTime(2023, 4, 14, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9254),
+                            Created = new DateTime(2023, 2, 15, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3829),
                             Description = "OnBoarding Sessions for AIP interns with HR and Mentors",
-                            DueDate = new DateTime(2023, 3, 29, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9253),
-                            IsDeleted = true,
-                            LatestUpdatedDateTime = new DateTime(2023, 4, 5, 2, 22, 58, 218, DateTimeKind.Utc).AddTicks(9254),
-                            Title = "OnBoarding Session #1"
+                            DueDate = new DateTime(2023, 3, 3, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3828),
+                            IsDeleted = false,
+                            Title = "OnBoarding Session #1",
+                            Updated = new DateTime(2023, 2, 24, 10, 1, 22, 705, DateTimeKind.Utc).AddTicks(3830)
                         });
                 });
 #pragma warning restore 612, 618

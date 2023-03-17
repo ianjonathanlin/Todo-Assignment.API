@@ -14,7 +14,6 @@ namespace Todo_Assignment.API.Data.Entities
         [StringLength(250)]
         public string Title { get; set; } = string.Empty;
 
-        [Required]
         [StringLength(2000)]
         public string Description { get; set; } = string.Empty;
 
@@ -27,8 +26,8 @@ namespace Todo_Assignment.API.Data.Entities
 
         public bool IsDeleted { get; set; } = false;
 
-        public DateTime CreatedDateTime { get; set; }
+        public DateTime Created { get; set; }
 
-        public DateTime LatestUpdatedDateTime { get; set; }
+        public DateTime Updated { get; set; }
     }
 }

@@ -14,8 +14,8 @@
 
         public bool IsDeleted { get; set; } = false;
         
-        public DateTime CreatedDateTime { get; set; } 
+        public DateTime Created { get; set; } 
 
-        public DateTime LatestUpdatedDateTime { get; set; }
+        public DateTime Updated { get; set; }
     }
 }
