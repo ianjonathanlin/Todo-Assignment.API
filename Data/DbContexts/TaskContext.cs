@@ -30,8 +30,8 @@ namespace Todo_Assignment.API.Data.DbContexts
                     DueDate = DateTime.UtcNow.AddDays(100),
                     Category = "Urgent",
                     IsDeleted = false,
-                    CreatedDateTime = DateTime.UtcNow.AddDays(-3),
-                    LatestUpdatedDateTime = DateTime.UtcNow
+                    Created = DateTime.UtcNow.AddDays(-3),
+                    Updated = DateTime.UtcNow
                 });
 
             modelBuilder.Entity<TaskEntity>()
@@ -43,8 +43,8 @@ namespace Todo_Assignment.API.Data.DbContexts
                     DueDate = DateTime.UtcNow.AddDays(8),
                     Category = "Assignment",
                     IsDeleted = false,
-                    CreatedDateTime = DateTime.UtcNow,
-                    LatestUpdatedDateTime = DateTime.UtcNow
+                    Created = DateTime.UtcNow,
+                    Updated = DateTime.UtcNow
                 });
 
             modelBuilder.Entity<TaskEntity>()
@@ -53,11 +53,11 @@ namespace Todo_Assignment.API.Data.DbContexts
                     Id = 3,
                     Title = "OnBoarding Session #1",
                     Description = "OnBoarding Sessions for AIP interns with HR and Mentors",
-                    DueDate = DateTime.UtcNow.AddDays(14),
+                    DueDate = DateTime.UtcNow.AddDays(-14),
                     Category = "OnBoarding",
-                    IsDeleted = true,
-                    CreatedDateTime = DateTime.UtcNow.AddDays(30),
-                    LatestUpdatedDateTime = DateTime.UtcNow.AddDays(21)
+                    IsDeleted = false,
+                    Created = DateTime.UtcNow.AddDays(-30),
+                    Updated = DateTime.UtcNow.AddDays(-21)
                 });
 
             base.OnModelCreating(modelBuilder);
