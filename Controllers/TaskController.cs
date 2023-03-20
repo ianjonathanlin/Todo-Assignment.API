@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Todo_Assignment.API.Data.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using Todo_Assignment.API.Models;
 using Todo_Assignment.API.Services;
 
@@ -28,7 +26,7 @@ namespace Todo_Assignment.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Action: GetAllTasks", ex);
+                _logger.LogError(ex, $"Action: GetAllTasks");
                 return BadRequest();
             }
         }
@@ -45,7 +43,7 @@ namespace Todo_Assignment.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Action: AddTask", ex);
+                _logger.LogError(ex, $"Action: AddTask");
                 return BadRequest();
             }
         }
@@ -62,13 +60,13 @@ namespace Todo_Assignment.API.Controllers
             }
             catch (TaskNotFoundException ex)
             {
-                _logger.LogInformation($"Task with ID {taskId} was not found. Action: UpdateTask", ex);
+                _logger.LogError(ex, $"Task with ID {taskId} was not found. Action: UpdateTask", taskId);
                 return NotFound();
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Action: UpdateTask", ex);
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, $"Action: UpdateTask");
+                return BadRequest();
             }
         }
 
@@ -84,12 +82,12 @@ namespace Todo_Assignment.API.Controllers
             }
             catch (TaskNotFoundException ex)
             {
-                _logger.LogInformation($"Task with ID {taskId} was not found. Action: DeleteTask", ex);
+                _logger.LogError(ex, $"Task with ID {taskId} was not found. Action: DeleteTask", taskId);
                 return NotFound();
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Action: DeleteTask", ex);
+                _logger.LogError(ex, $"Action: DeleteTask");
                 return BadRequest();
             }
         }

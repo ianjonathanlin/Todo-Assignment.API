@@ -28,9 +28,9 @@ namespace Todo_Assignment.API
 
             // Inject Serilog
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
+                .MinimumLevel.Error()
                 .WriteTo.Console()
-                .WriteTo.File("logs/task.txt", rollingInterval: RollingInterval.Hour)
+                .WriteTo.File("Logs/task.txt", rollingInterval: RollingInterval.Hour)
                 .CreateLogger();
 
             builder.Host.UseSerilog();
@@ -39,10 +39,9 @@ namespace Todo_Assignment.API
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             // Allow connection from client - policy
-            builder.Services.AddCors(options => options.AddPolicy(name: "TodoAssignment",
+            builder.Services.AddCors(options => options.AddPolicy(name: "TodoAssignment.UI",
                 policy =>
                 {
-                    policy.WithOrigins("http://localhost:7008").AllowAnyMethod().AllowAnyHeader();
                     policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
                 }));
 
@@ -56,7 +55,7 @@ namespace Todo_Assignment.API
             }
 
             // call policy
-            app.UseCors("TodoAssignment");
+            app.UseCors("TodoAssignment.UI");
 
             app.UseHttpsRedirection();
 
