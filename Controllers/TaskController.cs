@@ -27,7 +27,7 @@ namespace Todo_Assignment.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Action: GetAllTasks");
-                return BadRequest();
+                return BadRequest("Unable to retrieve tasks.");
             }
         }
 
@@ -39,12 +39,12 @@ namespace Todo_Assignment.API.Controllers
                 _taskRepository.AddTask(task);
                 await _taskRepository.SaveChangesAsync();
 
-                return Ok(await _taskRepository.GetTasksAsync());
+                return Ok("New task added successfully.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Action: AddTask");
-                return BadRequest();
+                return BadRequest("Unable to add task.");
             }
         }
 
@@ -56,7 +56,7 @@ namespace Todo_Assignment.API.Controllers
                 _taskRepository.UpdateTask(taskId, task);
                 await _taskRepository.SaveChangesAsync();
 
-                return Ok(await _taskRepository.GetTasksAsync());
+                return Ok("Task updated successfully.");
             }
             catch (TaskNotFoundException ex)
             {
@@ -66,7 +66,7 @@ namespace Todo_Assignment.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Action: UpdateTask");
-                return BadRequest();
+                return BadRequest("Unable to edit task");
             }
         }
 
@@ -78,7 +78,7 @@ namespace Todo_Assignment.API.Controllers
                 _taskRepository.DeleteTask(taskId);
                 await _taskRepository.SaveChangesAsync();
 
-                return Ok(await _taskRepository.GetTasksAsync());
+                return Ok("Task deleted successfully");
             }
             catch (TaskNotFoundException ex)
             {
@@ -88,7 +88,7 @@ namespace Todo_Assignment.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Action: DeleteTask");
-                return BadRequest();
+                return BadRequest("Unable to delete task.");
             }
         }
     }

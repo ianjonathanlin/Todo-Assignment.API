@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Todo_Assignment.API.Data.DbContexts;
@@ -11,9 +12,11 @@ using Todo_Assignment.API.Data.DbContexts;
 namespace Todo_Assignment.API.Migrations
 {
     [DbContext(typeof(TaskContext))]
-    partial class TaskContextModelSnapshot : ModelSnapshot
+    [Migration("20230320051851_DbMigration")]
+    partial class DbMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,34 +69,34 @@ namespace Todo_Assignment.API.Migrations
                         {
                             Id = 1,
                             Category = "Urgent",
-                            Created = new DateTime(2023, 3, 17, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3287),
+                            Created = new DateTime(2023, 3, 17, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6388),
                             Description = "Completing the first task is a big leap of success.",
-                            DueDate = new DateTime(2023, 6, 28, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3282),
+                            DueDate = new DateTime(2023, 6, 28, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6385),
                             IsDeleted = false,
                             Title = "First Task",
-                            Updated = new DateTime(2023, 3, 20, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3288)
+                            Updated = new DateTime(2023, 3, 20, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6389)
                         },
                         new
                         {
                             Id = 2,
                             Category = "Assignment",
-                            Created = new DateTime(2023, 3, 20, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3316),
+                            Created = new DateTime(2023, 3, 20, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6413),
                             Description = "Create a new To-Do using Angular and ASP.NET for API.",
-                            DueDate = new DateTime(2023, 3, 28, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3313),
+                            DueDate = new DateTime(2023, 3, 28, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6412),
                             IsDeleted = false,
                             Title = "To-Do List Project",
-                            Updated = new DateTime(2023, 3, 20, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3316)
+                            Updated = new DateTime(2023, 3, 20, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6413)
                         },
                         new
                         {
                             Id = 3,
                             Category = "OnBoarding",
-                            Created = new DateTime(2023, 2, 18, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3324),
+                            Created = new DateTime(2023, 2, 18, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6421),
                             Description = "OnBoarding Sessions for AIP interns with HR and Mentors",
-                            DueDate = new DateTime(2023, 3, 6, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3324),
+                            DueDate = new DateTime(2023, 3, 6, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6420),
                             IsDeleted = false,
                             Title = "OnBoarding Session #1",
-                            Updated = new DateTime(2023, 2, 27, 1, 38, 3, 729, DateTimeKind.Utc).AddTicks(3325)
+                            Updated = new DateTime(2023, 2, 27, 5, 18, 51, 66, DateTimeKind.Utc).AddTicks(6421)
                         });
                 });
 #pragma warning restore 612, 618

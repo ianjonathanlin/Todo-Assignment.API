@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Todo_Assignment.API.Data;
 using Todo_Assignment.API.Data.DbContexts;
 using Todo_Assignment.API.Data.Entities;
 using Todo_Assignment.API.Models;
@@ -64,7 +65,7 @@ namespace Todo_Assignment.API.Services
             return (await _context.SaveChangesAsync() >= 0);
         }
 
-        private TaskEntity GetTask(int taskId)
+        private TaskEntity? GetTask(int taskId)
         {
             return _context.Tasks.Where(t => t.Id == taskId).FirstOrDefault();
         }
