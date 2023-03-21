@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Todo_Assignment.API.Models;
 using Todo_Assignment.API.Services;
 
 namespace Todo_Assignment.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TaskController : ControllerBase
     {
@@ -39,7 +41,7 @@ namespace Todo_Assignment.API.Controllers
                 _taskRepository.AddTask(task);
                 await _taskRepository.SaveChangesAsync();
 
-                return Ok("New task added successfully.");
+                return NoContent(); 
             }
             catch (Exception ex)
             {
@@ -56,7 +58,7 @@ namespace Todo_Assignment.API.Controllers
                 _taskRepository.UpdateTask(taskId, task);
                 await _taskRepository.SaveChangesAsync();
 
-                return Ok("Task updated successfully.");
+                return NoContent();
             }
             catch (TaskNotFoundException ex)
             {
@@ -78,7 +80,7 @@ namespace Todo_Assignment.API.Controllers
                 _taskRepository.DeleteTask(taskId);
                 await _taskRepository.SaveChangesAsync();
 
-                return Ok("Task deleted successfully");
+                return NoContent();
             }
             catch (TaskNotFoundException ex)
             {

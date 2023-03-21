@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Todo_Assignment.API.Data;
 using Todo_Assignment.API.Data.DbContexts;
 using Todo_Assignment.API.Data.Entities;
 using Todo_Assignment.API.Models;
@@ -9,10 +8,10 @@ namespace Todo_Assignment.API.Services
 {
     public class TaskRepository : ITaskRepository
     {
-        private readonly TaskContext _context;
+        private readonly TodoDbContext _context;
         private readonly IMapper _mapper;
 
-        public TaskRepository(TaskContext context, IMapper mapper)
+        public TaskRepository(TodoDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -40,7 +39,7 @@ namespace Todo_Assignment.API.Services
 
         public void UpdateTask(int taskId, TaskModel updatedTask)
         {
-            TaskEntity existingTask = GetTask(taskId) ?? throw new TaskNotFoundException();
+            TaskEntity existingTask = GetTaskById(taskId) ?? throw new TaskNotFoundException();
 
             // Update with new values & fields
             existingTask.Title = updatedTask.Title;
@@ -54,7 +53,7 @@ namespace Todo_Assignment.API.Services
 
         public void DeleteTask(int taskId)
         {
-            TaskEntity taskToBeDeleted = GetTask(taskId) ?? throw new TaskNotFoundException();
+            TaskEntity taskToBeDeleted = GetTaskById(taskId) ?? throw new TaskNotFoundException();
 
             // Soft Delete
             taskToBeDeleted.IsDeleted = true;
@@ -65,7 +64,7 @@ namespace Todo_Assignment.API.Services
             return (await _context.SaveChangesAsync() >= 0);
         }
 
-        private TaskEntity? GetTask(int taskId)
+        private TaskEntity? GetTaskById(int taskId)
         {
             return _context.Tasks.Where(t => t.Id == taskId).FirstOrDefault();
         }

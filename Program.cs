@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 using Todo_Assignment.API.Data.DbContexts;
 using Todo_Assignment.API.Services;
 
@@ -18,10 +19,11 @@ namespace Todo_Assignment.API
             builder.Services.AddSwaggerGen();
 
             // Inject Db Context
-            builder.Services.AddDbContext<TaskContext>();
+            builder.Services.AddDbContext<TodoDbContext>();
 
             // Inject Services
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             // Inject Auto Mapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -36,7 +38,21 @@ namespace Todo_Assignment.API
             builder.Host.UseSerilog();
 
             // Authentication
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            builder.Services.AddAuthentication("Bearer")
+                .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new()
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = builder.Configuration["Authentication:Issuer"],
+                            ValidAudience = builder.Configuration["Authentication:Audience"],
+                            IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.ASCII.GetBytes(builder.Configuration["Authentication:SecretForKey"]))
+                        };
+                    }
+                );
 
             // Allow connection from client - policy
             builder.Services.AddCors(options => options.AddPolicy(name: "TodoAssignment.UI",
@@ -54,14 +70,13 @@ namespace Todo_Assignment.API
                 app.UseSwaggerUI();
             }
 
-            // call policy
+            // Call Policy
             app.UseCors("TodoAssignment.UI");
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 
