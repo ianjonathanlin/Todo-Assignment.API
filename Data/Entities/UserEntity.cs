@@ -8,8 +8,11 @@ namespace Todo_Assignment.API.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
-        public string UserName { get; set; } = string.Empty;
-        public byte[] PasswordHash { get; set; } = new byte[0];
-        public byte[] PasswordSalt { get; set;} = new byte[0];
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        public byte[] PasswordHash { get; set; }
+        [Required]
+        public byte[] PasswordSalt { get; set;}
     }
 }

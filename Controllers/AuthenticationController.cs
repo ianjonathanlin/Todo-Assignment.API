@@ -30,6 +30,12 @@ namespace Todo_Assignment.API.Controllers
         {
             try
             {
+                bool checkUserNameAvailable = _userRepository.GetUserByUserName(request.UserName) != null;
+                if (checkUserNameAvailable)
+                {
+                    return UnprocessableEntity("UserName is taken.");
+                }
+
                 CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
                 _userRepository.RegisterUser(request.UserName, passwordHash, passwordSalt);
@@ -53,29 +59,11 @@ namespace Todo_Assignment.API.Controllers
                 var user = ValidateUserCredentials(request);
                 if (user == null)
                 {
-                    return BadRequest("Invalid username or password");
+                    return BadRequest("Invalid UserName or Password.");
                 }
 
                 // Step 2: create a token
-                var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]!));
-                var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-                // claims
-                var claimsForToken = new List<Claim>
-                {
-                    new Claim("sub", user.UserId.ToString()),
-                    new Claim("userName", user.UserName.ToString())
-                };
-
-                // create jwt Security Token
-                var jwtSecurityToken = new JwtSecurityToken(
-                    _configuration["Authentication:Issuer"],
-                    _configuration["Authentication:Audience"],
-                    claimsForToken,
-                    DateTime.UtcNow,
-                    DateTime.UtcNow.AddHours(1),
-                    signingCredentials);
-
+                JwtSecurityToken jwtSecurityToken = CreateToken(user);
                 var tokenToReturn = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
                 return Ok(tokenToReturn);
@@ -85,6 +73,29 @@ namespace Todo_Assignment.API.Controllers
                 _logger.LogError(ex, $"Action: Authentication");
                 return BadRequest("Unable to authenticate user.");
             }
+        }
+
+        private JwtSecurityToken CreateToken(UserEntity user)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]!));
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            // claims
+            var claimsForToken = new List<Claim>
+                {
+                    new Claim("sub", user.UserId.ToString()),
+                    new Claim("userName", user.UserName.ToString())
+                };
+
+            // create jwt Security Token
+            var jwtSecurityToken = new JwtSecurityToken(
+                _configuration["Authentication:Issuer"],
+                _configuration["Authentication:Audience"],
+                claimsForToken,
+                DateTime.UtcNow,
+                DateTime.UtcNow.AddHours(1),
+                signingCredentials);
+            return jwtSecurityToken;
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

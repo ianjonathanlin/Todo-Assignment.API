@@ -24,14 +24,16 @@ namespace Todo_Assignment.API.Services
 
         public void AddTask(TaskModel task)
         {
+            DateTime currentDateTime = DateTime.UtcNow;
+
             var newTask = new TaskEntity
             {
                 Title = task.Title,
                 Description = task.Description,
                 DueDate = task.DueDate,
                 Category = task.Category,
-                Created = DateTime.UtcNow,
-                Updated = DateTime.UtcNow
+                Created = currentDateTime,
+                Updated = currentDateTime
             };
 
             _context.Tasks.Add(newTask);
@@ -57,6 +59,9 @@ namespace Todo_Assignment.API.Services
 
             // Soft Delete
             taskToBeDeleted.IsDeleted = true;
+            taskToBeDeleted.Updated = DateTime.UtcNow;
+
+            _context.Tasks.Update(taskToBeDeleted);
         }
 
         public async Task<bool> SaveChangesAsync()

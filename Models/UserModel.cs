@@ -1,8 +1,12 @@
-﻿namespace Todo_Assignment.API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Todo_Assignment.API.Models
 {
     public class UserModel
     {
-        public string UserName { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        public string Password { get; set; }
     }
 }
