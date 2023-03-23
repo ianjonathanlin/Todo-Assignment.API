@@ -24,6 +24,7 @@ namespace Todo_Assignment.API
             // Inject Services
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
 
             // Inject Auto Mapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -45,11 +46,13 @@ namespace Todo_Assignment.API
                         {
                             ValidateIssuer = true,
                             ValidateAudience = true,
+                            ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
                             ValidIssuer = builder.Configuration["Authentication:Issuer"],
                             ValidAudience = builder.Configuration["Authentication:Audience"],
                             IssuerSigningKey = new SymmetricSecurityKey(
-                                Encoding.ASCII.GetBytes(builder.Configuration["Authentication:SecretForKey"]))
+                                Encoding.ASCII.GetBytes(builder.Configuration["Authentication:SecretForKey"])),
+                            ClockSkew = TimeSpan.Zero
                         };
                     }
                 );

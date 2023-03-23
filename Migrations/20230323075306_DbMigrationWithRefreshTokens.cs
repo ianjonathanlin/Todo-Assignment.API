@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Todo_Assignment.API.Migrations
 {
     /// <inheritdoc />
-    public partial class DbMigrationWithUserTable : Migration
+    public partial class DbMigrationWithRefreshTokens : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,15 +37,17 @@ namespace Todo_Assignment.API.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserName = table.Column<string>(type: "text", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "bytea", nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false)
+                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
@@ -53,9 +55,9 @@ namespace Todo_Assignment.API.Migrations
                 columns: new[] { "Id", "Category", "Created", "Description", "DueDate", "IsDeleted", "Title", "Updated" },
                 values: new object[,]
                 {
-                    { 1, "Urgent", new DateTime(2023, 3, 18, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2501), "Completing the first task is a big leap of success.", new DateTime(2023, 6, 29, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2494), false, "First Task", new DateTime(2023, 3, 21, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2502) },
-                    { 2, "Assignment", new DateTime(2023, 3, 21, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2541), "Create a new To-Do using Angular and ASP.NET for API.", new DateTime(2023, 3, 29, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2540), false, "To-Do List Project", new DateTime(2023, 3, 21, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2541) },
-                    { 3, "OnBoarding", new DateTime(2023, 2, 19, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2556), "OnBoarding Sessions for AIP interns with HR and Mentors", new DateTime(2023, 3, 7, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2555), false, "OnBoarding Session #1", new DateTime(2023, 2, 28, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2557) }
+                    { 1, "Urgent", new DateTime(2023, 3, 20, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9429), "Completing the first task is a big leap of success.", new DateTime(2023, 7, 1, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9420), false, "First Task", new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9429) },
+                    { 2, "Assignment", new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9461), "Create a new To-Do using Angular and ASP.NET for API.", new DateTime(2023, 3, 31, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9460), false, "To-Do List Project", new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9461) },
+                    { 3, "OnBoarding", new DateTime(2023, 2, 21, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469), "OnBoarding Sessions for AIP interns with HR and Mentors", new DateTime(2023, 3, 9, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469), false, "OnBoarding Session #1", new DateTime(2023, 3, 2, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469) }
                 });
         }
 

@@ -7,12 +7,16 @@ namespace Todo_Assignment.API.Data.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int Id { get; set; }
+
         [Required]
         public string UserName { get; set; }
         [Required]
         public byte[] PasswordHash { get; set; }
         [Required]
-        public byte[] PasswordSalt { get; set;}
+        public byte[] PasswordSalt { get; set; }
+
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }

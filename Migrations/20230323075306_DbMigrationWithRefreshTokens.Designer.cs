@@ -12,8 +12,8 @@ using Todo_Assignment.API.Data.DbContexts;
 namespace Todo_Assignment.API.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20230321064954_DbMigrationWithUserTable")]
-    partial class DbMigrationWithUserTable
+    [Migration("20230323075306_DbMigrationWithRefreshTokens")]
+    partial class DbMigrationWithRefreshTokens
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,44 +69,44 @@ namespace Todo_Assignment.API.Migrations
                         {
                             Id = 1,
                             Category = "Urgent",
-                            Created = new DateTime(2023, 3, 18, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2501),
+                            Created = new DateTime(2023, 3, 20, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9429),
                             Description = "Completing the first task is a big leap of success.",
-                            DueDate = new DateTime(2023, 6, 29, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2494),
+                            DueDate = new DateTime(2023, 7, 1, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9420),
                             IsDeleted = false,
                             Title = "First Task",
-                            Updated = new DateTime(2023, 3, 21, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2502)
+                            Updated = new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9429)
                         },
                         new
                         {
                             Id = 2,
                             Category = "Assignment",
-                            Created = new DateTime(2023, 3, 21, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2541),
+                            Created = new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9461),
                             Description = "Create a new To-Do using Angular and ASP.NET for API.",
-                            DueDate = new DateTime(2023, 3, 29, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2540),
+                            DueDate = new DateTime(2023, 3, 31, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9460),
                             IsDeleted = false,
                             Title = "To-Do List Project",
-                            Updated = new DateTime(2023, 3, 21, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2541)
+                            Updated = new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9461)
                         },
                         new
                         {
                             Id = 3,
                             Category = "OnBoarding",
-                            Created = new DateTime(2023, 2, 19, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2556),
+                            Created = new DateTime(2023, 2, 21, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469),
                             Description = "OnBoarding Sessions for AIP interns with HR and Mentors",
-                            DueDate = new DateTime(2023, 3, 7, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2555),
+                            DueDate = new DateTime(2023, 3, 9, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469),
                             IsDeleted = false,
                             Title = "OnBoarding Session #1",
-                            Updated = new DateTime(2023, 2, 28, 6, 49, 54, 876, DateTimeKind.Utc).AddTicks(2557)
+                            Updated = new DateTime(2023, 3, 2, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469)
                         });
                 });
 
             modelBuilder.Entity("Todo_Assignment.API.Data.Entities.UserEntity", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -116,11 +116,17 @@ namespace Todo_Assignment.API.Migrations
                         .IsRequired()
                         .HasColumnType("bytea");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });

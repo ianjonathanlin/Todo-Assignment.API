@@ -1,0 +1,70 @@
+2023-03-23 16:27:22.424 +08:00 [ERR] Action: Refresh-Token
+Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException: IDX10208: Unable to validate audience. validationParameters.ValidAudience is null or whitespace and validationParameters.ValidAudiences is null.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateAudience(IEnumerable`1 audiences, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateJWS(String token, TokenValidationParameters validationParameters, BaseConfiguration currentConfiguration, SecurityToken& signatureValidatedToken, ExceptionDispatchInfo& exceptionThrown)
+--- End of stack trace from previous location ---
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, JwtSecurityToken outerToken, TokenValidationParameters validationParameters, SecurityToken& signatureValidatedToken)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Todo_Assignment.API.Services.TokenService.GetPrincipalFromExpiredToken(String token) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Services\TokenService.cs:line 59
+   at Todo_Assignment.API.Controllers.TokenController.Refresh(TokenApiModel tokenApiModel) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Controllers\TokenController.cs:line 38
+2023-03-23 16:27:48.674 +08:00 [ERR] Action: Refresh-Token
+Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException: IDX10208: Unable to validate audience. validationParameters.ValidAudience is null or whitespace and validationParameters.ValidAudiences is null.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateAudience(IEnumerable`1 audiences, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateJWS(String token, TokenValidationParameters validationParameters, BaseConfiguration currentConfiguration, SecurityToken& signatureValidatedToken, ExceptionDispatchInfo& exceptionThrown)
+--- End of stack trace from previous location ---
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, JwtSecurityToken outerToken, TokenValidationParameters validationParameters, SecurityToken& signatureValidatedToken)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Todo_Assignment.API.Services.TokenService.GetPrincipalFromExpiredToken(String token) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Services\TokenService.cs:line 59
+   at Todo_Assignment.API.Controllers.TokenController.Refresh(TokenApiModel tokenApiModel) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Controllers\TokenController.cs:line 38
+2023-03-23 16:29:05.090 +08:00 [ERR] Action: Refresh-Token
+Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException: IDX10208: Unable to validate audience. validationParameters.ValidAudience is null or whitespace and validationParameters.ValidAudiences is null.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateAudience(IEnumerable`1 audiences, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateJWS(String token, TokenValidationParameters validationParameters, BaseConfiguration currentConfiguration, SecurityToken& signatureValidatedToken, ExceptionDispatchInfo& exceptionThrown)
+--- End of stack trace from previous location ---
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, JwtSecurityToken outerToken, TokenValidationParameters validationParameters, SecurityToken& signatureValidatedToken)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Todo_Assignment.API.Services.TokenService.GetPrincipalFromExpiredToken(String token) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Services\TokenService.cs:line 59
+   at Todo_Assignment.API.Controllers.TokenController.Refresh(TokenApiModel tokenApiModel) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Controllers\TokenController.cs:line 38
+2023-03-23 16:29:30.255 +08:00 [ERR] Action: Refresh-Token
+Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException: IDX10208: Unable to validate audience. validationParameters.ValidAudience is null or whitespace and validationParameters.ValidAudiences is null.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateAudience(IEnumerable`1 audiences, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateJWS(String token, TokenValidationParameters validationParameters, BaseConfiguration currentConfiguration, SecurityToken& signatureValidatedToken, ExceptionDispatchInfo& exceptionThrown)
+--- End of stack trace from previous location ---
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, JwtSecurityToken outerToken, TokenValidationParameters validationParameters, SecurityToken& signatureValidatedToken)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Todo_Assignment.API.Services.TokenService.GetPrincipalFromExpiredToken(String token) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Services\TokenService.cs:line 59
+   at Todo_Assignment.API.Controllers.TokenController.Refresh(TokenApiModel tokenApiModel) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Controllers\TokenController.cs:line 38
+2023-03-23 16:30:01.549 +08:00 [ERR] Action: Refresh-Token
+Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException: IDX10208: Unable to validate audience. validationParameters.ValidAudience is null or whitespace and validationParameters.ValidAudiences is null.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateAudience(IEnumerable`1 audiences, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateJWS(String token, TokenValidationParameters validationParameters, BaseConfiguration currentConfiguration, SecurityToken& signatureValidatedToken, ExceptionDispatchInfo& exceptionThrown)
+--- End of stack trace from previous location ---
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, JwtSecurityToken outerToken, TokenValidationParameters validationParameters, SecurityToken& signatureValidatedToken)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Todo_Assignment.API.Services.TokenService.GetPrincipalFromExpiredToken(String token) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Services\TokenService.cs:line 59
+   at Todo_Assignment.API.Controllers.TokenController.Refresh(TokenApiModel tokenApiModel) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Controllers\TokenController.cs:line 38
+2023-03-23 16:30:02.494 +08:00 [ERR] Action: Refresh-Token
+Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException: IDX10208: Unable to validate audience. validationParameters.ValidAudience is null or whitespace and validationParameters.ValidAudiences is null.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateAudience(IEnumerable`1 audiences, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateJWS(String token, TokenValidationParameters validationParameters, BaseConfiguration currentConfiguration, SecurityToken& signatureValidatedToken, ExceptionDispatchInfo& exceptionThrown)
+--- End of stack trace from previous location ---
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, JwtSecurityToken outerToken, TokenValidationParameters validationParameters, SecurityToken& signatureValidatedToken)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Todo_Assignment.API.Services.TokenService.GetPrincipalFromExpiredToken(String token) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Services\TokenService.cs:line 59
+   at Todo_Assignment.API.Controllers.TokenController.Refresh(TokenApiModel tokenApiModel) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Controllers\TokenController.cs:line 38
+2023-03-23 16:32:01.601 +08:00 [ERR] Action: Refresh-Token
+Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException: IDX10208: Unable to validate audience. validationParameters.ValidAudience is null or whitespace and validationParameters.ValidAudiences is null.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateAudience(IEnumerable`1 audiences, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateJWS(String token, TokenValidationParameters validationParameters, BaseConfiguration currentConfiguration, SecurityToken& signatureValidatedToken, ExceptionDispatchInfo& exceptionThrown)
+--- End of stack trace from previous location ---
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, JwtSecurityToken outerToken, TokenValidationParameters validationParameters, SecurityToken& signatureValidatedToken)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Todo_Assignment.API.Services.TokenService.GetPrincipalFromExpiredToken(String token) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Services\TokenService.cs:line 59
+   at Todo_Assignment.API.Controllers.TokenController.Refresh(TokenApiModel tokenApiModel) in C:\Users\LINI013\source\repos\Todo-Assignment\Todo-Assignment.API\Controllers\TokenController.cs:line 38
