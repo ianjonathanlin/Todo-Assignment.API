@@ -21,15 +21,16 @@ namespace Todo_Assignment.API.Services
 
         public void GenerateTokens(UserEntity user, IEnumerable<Claim> claims, out string authToken, out string refreshToken)
         {
-            authToken = GenerateAccessToken(claims);
+            authToken = GenerateAuthToken(claims);
             refreshToken = GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(5); // change the RefreshToken exp here
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(2); // change the RefreshToken exp here
+
             _context.SaveChanges();
         }
 
-        public string GenerateAccessToken(IEnumerable<Claim> claims)
+        public string GenerateAuthToken(IEnumerable<Claim> claims)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Authentication:SecretForKey"]!));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

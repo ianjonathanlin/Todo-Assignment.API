@@ -55,9 +55,9 @@ namespace Todo_Assignment.API.Migrations
                 columns: new[] { "Id", "Category", "Created", "Description", "DueDate", "IsDeleted", "Title", "Updated" },
                 values: new object[,]
                 {
-                    { 1, "Urgent", new DateTime(2023, 3, 21, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4181), "Completing the first task is a big leap of success.", new DateTime(2023, 7, 2, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4175), false, "First Task", new DateTime(2023, 3, 24, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4182) },
-                    { 2, "Assignment", new DateTime(2023, 3, 24, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4221), "Create a new To-Do using Angular and ASP.NET for API.", new DateTime(2023, 4, 1, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4220), false, "To-Do List Project", new DateTime(2023, 3, 24, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4221) },
-                    { 3, "OnBoarding", new DateTime(2023, 2, 22, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4232), "OnBoarding Sessions for AIP interns with HR and Mentors", new DateTime(2023, 3, 10, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4232), false, "OnBoarding Session #1", new DateTime(2023, 3, 3, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4233) }
+                    { 1, "Urgent", new DateTime(2023, 3, 21, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5129), "Completing the first task is a big leap of success.", new DateTime(2023, 7, 2, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5122), false, "First Task", new DateTime(2023, 3, 24, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5130) },
+                    { 2, "Assignment", new DateTime(2023, 3, 24, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5293), "Create a new To-Do using Angular and ASP.NET for API.", new DateTime(2023, 4, 1, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5292), false, "To-Do List Project", new DateTime(2023, 3, 24, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5293) },
+                    { 3, "OnBoarding", new DateTime(2023, 2, 22, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5308), "OnBoarding Sessions for AIP interns with HR and Mentors", new DateTime(2023, 3, 10, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5307), false, "OnBoarding Session #1", new DateTime(2023, 3, 3, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5309) }
                 });
         }
 

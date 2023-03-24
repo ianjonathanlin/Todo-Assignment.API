@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Todo_Assignment.API.Data.DbContexts;
 using Todo_Assignment.API.Data.Entities;
@@ -59,7 +58,7 @@ namespace Todo_Assignment.API.Controllers
                 var user = _userRepository.ValidateUserCredentials(request);
                 if (user == null)
                 {
-                    return BadRequest("Invalid UserName or Password.");
+                    return BadRequest("Invalid Username or Password.");
                 }
 
                 // Step 2: Create Tokens
@@ -84,33 +83,38 @@ namespace Todo_Assignment.API.Controllers
             }
         }
 
-
-        [Authorize]
         [HttpPost]
         [Route("refresh-token")]
         public IActionResult RefreshToken(TokenApiModel tokenApiModel)
         {
             try
             {
-                string authToken = tokenApiModel.AuthToken!;
-                string refreshToken = tokenApiModel.RefreshToken!;
-
-                var principal = _tokenService.GetPrincipalFromExpiredToken(authToken!);
-                var username = principal.Identity!.Name;
-
-                var user = _context.Users.SingleOrDefault(u => u.UserName == username);
-                if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+                if (tokenApiModel is null)
                 {
-                    return Unauthorized("Invalid Token/Session.");
+                    return BadRequest("Invalid client request.");
                 }
-
-                _tokenService.GenerateTokens(user, principal.Claims, out string newAuthToken, out string newRefreshToken);
-
-                return Ok(new AuthenticatedResponseModel
+                else
                 {
-                    AuthToken = newAuthToken,
-                    RefreshToken = newRefreshToken
-                });
+                    string retrievedAuthToken = tokenApiModel.AuthToken!;
+                    string retrievedRefreshToken = tokenApiModel.RefreshToken!;
+
+                    var principal = _tokenService.GetPrincipalFromExpiredToken(retrievedAuthToken);
+                    var username = principal.Identity!.Name;
+
+                    var user = _context.Users.SingleOrDefault(u => u.UserName == username);
+                    if (user is null || user.RefreshToken != retrievedRefreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+                    {
+                        return Unauthorized("Invalid or Expired Token/Session.");
+                    }
+
+                    _tokenService.GenerateTokens(user, principal.Claims, out string authToken, out string refreshToken);
+
+                    return Ok(new AuthenticatedResponseModel
+                    {
+                        AuthToken = authToken,
+                        RefreshToken = refreshToken
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -118,5 +122,6 @@ namespace Todo_Assignment.API.Controllers
                 return BadRequest("Invalid client request.");
             }
         }
+
     }
 }

@@ -19,8 +19,6 @@ namespace Todo_Assignment.API.Models
         [Required]
         [StringLength(2000)]
         public string Category { get; set; }
-
-        public bool IsDeleted { get; set; } = false;
         
         public DateTime Created { get; set; } 
 
