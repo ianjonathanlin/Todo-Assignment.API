@@ -3,16 +3,30 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Todo_Assignment.API.Data.DbContexts;
+using Todo_Assignment.API.Data.Entities;
 
 namespace Todo_Assignment.API.Services
 {
     public class TokenService : ITokenService
     {
+        private readonly TodoDbContext _context;
         private readonly IConfiguration _config;
 
-        public TokenService(IConfiguration config)
+        public TokenService(TodoDbContext context, IConfiguration config)
         {
+            _context = context;
             _config = config;
+        }
+
+        public void GenerateTokens(UserEntity user, IEnumerable<Claim> claims, out string authToken, out string refreshToken)
+        {
+            authToken = GenerateAccessToken(claims);
+            refreshToken = GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(1); // change the RefreshToken exp here
+            _context.SaveChanges();
         }
 
         public string GenerateAccessToken(IEnumerable<Claim> claims)
@@ -24,7 +38,7 @@ namespace Todo_Assignment.API.Services
                 issuer: _config["Authentication:Issuer"],
                 audience: _config["Authentication:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(1),
+                expires: DateTime.UtcNow.AddSeconds(30), // Change the AuthToken exp here
                 signingCredentials: signinCredentials
             );
 
@@ -54,10 +68,9 @@ namespace Todo_Assignment.API.Services
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken securityToken;
 
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+            JwtSecurityToken jwtSecurityToken = securityToken as JwtSecurityToken;
 
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
                 throw new SecurityTokenException("Invalid token");

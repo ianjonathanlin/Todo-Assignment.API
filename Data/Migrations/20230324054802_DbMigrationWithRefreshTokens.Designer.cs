@@ -12,7 +12,7 @@ using Todo_Assignment.API.Data.DbContexts;
 namespace Todo_Assignment.API.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20230323075306_DbMigrationWithRefreshTokens")]
+    [Migration("20230324054802_DbMigrationWithRefreshTokens")]
     partial class DbMigrationWithRefreshTokens
     {
         /// <inheritdoc />
@@ -69,34 +69,34 @@ namespace Todo_Assignment.API.Migrations
                         {
                             Id = 1,
                             Category = "Urgent",
-                            Created = new DateTime(2023, 3, 20, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9429),
+                            Created = new DateTime(2023, 3, 21, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4181),
                             Description = "Completing the first task is a big leap of success.",
-                            DueDate = new DateTime(2023, 7, 1, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9420),
+                            DueDate = new DateTime(2023, 7, 2, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4175),
                             IsDeleted = false,
                             Title = "First Task",
-                            Updated = new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9429)
+                            Updated = new DateTime(2023, 3, 24, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4182)
                         },
                         new
                         {
                             Id = 2,
                             Category = "Assignment",
-                            Created = new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9461),
+                            Created = new DateTime(2023, 3, 24, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4221),
                             Description = "Create a new To-Do using Angular and ASP.NET for API.",
-                            DueDate = new DateTime(2023, 3, 31, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9460),
+                            DueDate = new DateTime(2023, 4, 1, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4220),
                             IsDeleted = false,
                             Title = "To-Do List Project",
-                            Updated = new DateTime(2023, 3, 23, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9461)
+                            Updated = new DateTime(2023, 3, 24, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4221)
                         },
                         new
                         {
                             Id = 3,
                             Category = "OnBoarding",
-                            Created = new DateTime(2023, 2, 21, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469),
+                            Created = new DateTime(2023, 2, 22, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4232),
                             Description = "OnBoarding Sessions for AIP interns with HR and Mentors",
-                            DueDate = new DateTime(2023, 3, 9, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469),
+                            DueDate = new DateTime(2023, 3, 10, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4232),
                             IsDeleted = false,
                             Title = "OnBoarding Session #1",
-                            Updated = new DateTime(2023, 3, 2, 7, 53, 6, 839, DateTimeKind.Utc).AddTicks(9469)
+                            Updated = new DateTime(2023, 3, 3, 5, 48, 2, 151, DateTimeKind.Utc).AddTicks(4233)
                         });
                 });
 
