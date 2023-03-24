@@ -87,8 +87,8 @@ namespace Todo_Assignment.API.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("refresh")]
-        public IActionResult Refresh(TokenApiModel tokenApiModel)
+        [Route("refresh-token")]
+        public IActionResult RefreshToken(TokenApiModel tokenApiModel)
         {
             try
             {

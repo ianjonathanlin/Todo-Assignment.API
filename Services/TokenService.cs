@@ -25,7 +25,7 @@ namespace Todo_Assignment.API.Services
             refreshToken = GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(1); // change the RefreshToken exp here
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(5); // change the RefreshToken exp here
             _context.SaveChanges();
         }
 
@@ -38,7 +38,7 @@ namespace Todo_Assignment.API.Services
                 issuer: _config["Authentication:Issuer"],
                 audience: _config["Authentication:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddSeconds(30), // Change the AuthToken exp here
+                expires: DateTime.UtcNow.AddMinutes(1), // Change the AuthToken exp here
                 signingCredentials: signinCredentials
             );
 
