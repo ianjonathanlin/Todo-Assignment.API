@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Todo_Assignment.API.Data.DbContexts;
-using Todo_Assignment.API.Data.Entities;
 using Todo_Assignment.API.Models;
 using Todo_Assignment.API.Services;
 
@@ -25,7 +24,7 @@ namespace Todo_Assignment.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserEntity>> Register(UserModel request)
+        public async Task<IActionResult> Register(UserModel request)
         {
             try
             {
@@ -50,7 +49,7 @@ namespace Todo_Assignment.API.Controllers
         }
 
         [HttpPost("authenticate")]
-        public ActionResult<string> Authenticate(UserModel request)
+        public IActionResult Authenticate(UserModel request)
         {
             try
             {

@@ -34,7 +34,7 @@ namespace Todo_Assignment.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<TaskModel>>> AddTask(TaskModel task)
+        public async Task<IActionResult> AddTask(TaskModel task)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace Todo_Assignment.API.Controllers
         }
 
         [HttpDelete("{taskId}")]
-        public async Task<ActionResult<IEnumerable<TaskModel>>> DeleteTask(int taskId)
+        public async Task<IActionResult> DeleteTask(int taskId)
         {
             try
             {

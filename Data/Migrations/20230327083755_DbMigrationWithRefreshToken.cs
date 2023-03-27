@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Todo_Assignment.API.Migrations
 {
     /// <inheritdoc />
-    public partial class DbMigrationWithRefreshTokens : Migration
+    public partial class DbMigrationWithRefreshToken : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,9 +55,9 @@ namespace Todo_Assignment.API.Migrations
                 columns: new[] { "Id", "Category", "Created", "Description", "DueDate", "IsDeleted", "Title", "Updated" },
                 values: new object[,]
                 {
-                    { 1, "Urgent", new DateTime(2023, 3, 21, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5129), "Completing the first task is a big leap of success.", new DateTime(2023, 7, 2, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5122), false, "First Task", new DateTime(2023, 3, 24, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5130) },
-                    { 2, "Assignment", new DateTime(2023, 3, 24, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5293), "Create a new To-Do using Angular and ASP.NET for API.", new DateTime(2023, 4, 1, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5292), false, "To-Do List Project", new DateTime(2023, 3, 24, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5293) },
-                    { 3, "OnBoarding", new DateTime(2023, 2, 22, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5308), "OnBoarding Sessions for AIP interns with HR and Mentors", new DateTime(2023, 3, 10, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5307), false, "OnBoarding Session #1", new DateTime(2023, 3, 3, 8, 51, 43, 224, DateTimeKind.Utc).AddTicks(5309) }
+                    { 1, "Urgent", new DateTime(2023, 3, 24, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4440), "Completing the first task is a big leap of success.", new DateTime(2023, 7, 5, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4430), false, "First Task", new DateTime(2023, 3, 27, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4441) },
+                    { 2, "Assignment", new DateTime(2023, 3, 27, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4477), "Create a new To-Do using Angular and ASP.NET for API.", new DateTime(2023, 4, 4, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4476), false, "To-Do List Project", new DateTime(2023, 3, 27, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4478) },
+                    { 3, "OnBoarding", new DateTime(2023, 2, 25, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4491), "OnBoarding Sessions for AIP interns with HR and Mentors", new DateTime(2023, 3, 13, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4490), false, "OnBoarding Session #1", new DateTime(2023, 3, 6, 8, 37, 55, 423, DateTimeKind.Utc).AddTicks(4492) }
                 });
         }
 
